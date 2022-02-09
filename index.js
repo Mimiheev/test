@@ -66,17 +66,6 @@ const people = [
     {id: 7, name: 'George', age: 18},
 ]
 
-const getAverageAge = function () {
-    if (people.length === 0) {
-        return 0
-    }
-    const sum = people.reduce((total, person) => {
-        return total + person.age
-    }, 0)
-    return sum / people.length
-}
-
-console.log('avg age', getAverageAge())
 //
 // const getPersonAge = (name) => {
 //     let person= people.find((item) => {
@@ -97,42 +86,68 @@ console.log('avg age', getAverageAge())
 // }
 
 function getHusbandName(wifeName) {
-    let person = people.find((item) => {
+    let wife = people.find((item) => {
         return item.name === wifeName
     })
-    console.log('person', person)
+    if (!wife) return null
     let husband = people.find((item) => {
-        return person.husband === item.id
+        return wife.husband === item.id
     })
-    console.log('husband', husband)
-    return husband.name;
+    return husband ? husband.name : null;
 }
-console.log(getHusbandName('Diana'))
+// const wifeName = 'Alice';
+// console.log(`Husband of ${wifeName} is ${getHusbandName(wifeName)}`);
+
 
 function getWifeName(husbandName) {
-    let person = people.find((item) => {
+    const husband = people.find((item) => {
         return item.name === husbandName
-    })
-    let wife = people.find((item) => {
-        return person.id === item.husband
-    })
-    return wife.name;
+    });
+    if (!husband) return null;
+    const wife = people.find((item) => {
+        return husband.id === item.husband
+    });
+    return wife ? wife.name : null;
 }
-console.log(getWifeName('George'))
+// const husbandName = 'Eugene';
+// console.log(`Wife of ${husbandName} is ${getWifeName(husbandName)}`);
+
+const getAverageAge = function () {
+    if (people.length === 0) {
+        return 0
+    }
+    const sum = people.reduce((total, person) => {
+        return total + person.age
+    }, 0)
+    return sum / people.length
+}
+console.log('avg age', getAverageAge())
 
 // { male: 4, female: 3 }
 function getGenderStats(arr) {
-    let femaleAll = []
+    return arr.reduce(({ males, females }, person) => {
+        person.husband ? females++ : males++
+        return { males, females }
+    }, { males: 0, females: 0 });
+}
+console.log(getGenderStats(people))
 
+// макс разница между мужем и женой
+function getMaxAgeDifference() {
+    const spouses = people.reduce(({spouses1, spouses2, spouses3}, person) => {
+
+    }, { spouses1: [], spouses2: [], spouses3: [] })
 }
 
 
-
-
-// макс разница между мужем и женой
-// function getMaxAgeDifference()
-
-
-
-
+function testVariables() {
+    // var var2;
+    // console.log(var3)
+    // console.log('hoisted var1', var1)
+    // console.log('hoisted var2', var2)
+    // const var1 = 10;
+    // var2 = 20;
+    // console.log('var1', var1)
+    // console.log('var2', var2)
+}
 
