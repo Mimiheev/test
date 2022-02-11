@@ -59,7 +59,7 @@ function isObject(obj) {
 // console.log('Expect new Animal() to be false: ', isObject(animal))
 
 const people = [
-    {id: 1, name: 'Alice', age: 23, husband: 7},
+    {id: 1, name: 'Alice', age: 21, husband: 7},
     {id: 2, name: 'Bob', age: 27},
     {id: 3, name: 'Charles', age: 52},
     {id: 4, name: 'Diana', age: 40, husband: 2},
@@ -110,8 +110,8 @@ function getHusbandName(wifeName) {
     return husband ? husband.name : null;
 }
 
-// const wifeName = 'Alice';
-// console.log(`Husband of ${wifeName} is ${getHusbandName(wifeName)}`);
+const wifeName = 'Alice';
+console.log(`Husband of ${wifeName} is ${getHusbandName(wifeName)}`);
 
 
 function getWifeName(husbandName) {
@@ -127,9 +127,8 @@ function getWifeName(husbandName) {
     return wife ? wife.name : null;
 }
 
-console.log('1' + getWifeName('George'))
-// const husbandName = 'Eugene';
-// console.log(`Wife of ${husbandName} is ${getWifeName(husbandName)}`);
+const husbandName = 'Eugene';
+console.log(`Wife of ${husbandName} is ${getWifeName(husbandName)}`);
 
 const getAverageAge = function () {
     if (people.length === 0) {
@@ -167,23 +166,21 @@ function getMaxAgeDifference() {
     }).filter(pair => pair);
 
     const countDifference = pairs.map((item) => {
-        return {
-            ...item,
-            difference: Math.abs(item.wife.age - item.husband.age)
+        return Math.abs(item.wife.age - item.husband.age)
+    });
+
+    let maxDiff = -Infinity;
+    countDifference.forEach((diff) => {
+        if (maxDiff < diff) {
+            maxDiff = diff;
         }
-    });
-
-    countDifference.sort((a, b) => {
-        return  b.difference - a.difference
-    });
+    })
 
 
-    return countDifference[0].difference
+    return maxDiff;
 }
 
-
-
-console.log('Maximum difference between husband and wife:', getMaxAgeDifference(), 'years')
+console.log(`Maximum difference between husband and wife: ${getMaxAgeDifference()} years`)
 
 
 function testVariables() {
@@ -197,3 +194,35 @@ function testVariables() {
     // console.log('var2', var2)
 }
 
+
+const array = [1, 2, 'a', '3', 4, 5, -5, -2]
+
+function filterList(arr) {
+    return arr.filter((item) => {
+        return typeof item === 'number' && item > 0
+    })
+}
+
+console.log(`List number: ${filterList(array)}`)
+
+const str = 'abracadabra';
+for (let i=0; i<=str.length; i++) {
+    str[i]
+}
+
+const arr = str.split('');
+
+console.log(arr)
+const arr2 = [1,2,3];
+arr2.indexOf(2) // => 1 || -1
+
+function isVowel(symbol) {
+    return symbol
+}
+console.log(isVowel())
+
+function getCount(str) {
+    let vowelsCount = 0;
+    // enter your majic here
+    return vowelsCount;
+}
