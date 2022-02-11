@@ -3,7 +3,7 @@ const str = '3';
 const obj = {foo: 'bar'}
 const bool = true;
 const undef = undefined;
-const arr = [1,2,3]; // object // Array.isArray
+const arr = [1, 2, 3]; // object // Array.isArray
 
 const nullValue = null;
 
@@ -22,7 +22,9 @@ number === str // false
 // instanceof
 
 function isObject(obj) {
-    return typeof obj === "object" && !Array.isArray(obj) && obj !== null && !(obj instanceof Date)}
+    return typeof obj === "object" && !Array.isArray(obj) && obj !== null && !(obj instanceof Date)
+}
+
 // }
 //
 // // IT SHOULD RETURN 8!!!
@@ -58,13 +60,25 @@ function isObject(obj) {
 
 const people = [
     {id: 1, name: 'Alice', age: 23, husband: 7},
-    {id: 2, name: 'Bob', age: 27 },
-    {id: 3, name: 'Charles', age: 52 },
+    {id: 2, name: 'Bob', age: 27},
+    {id: 3, name: 'Charles', age: 52},
     {id: 4, name: 'Diana', age: 40, husband: 2},
-    {id: 5, name: 'Eugene', age: 31 },
-    {id: 6, name: 'Franciska', age: 20, husband: 5 },
+    {id: 5, name: 'Eugene', age: 31},
+    {id: 6, name: 'Franciska', age: 20, husband: 5},
     {id: 7, name: 'George', age: 18},
 ]
+
+let pairs = []
+people.forEach(p => {
+    if (!p.husband) {
+        return
+    }
+    pairs.push({
+        wife: p,
+        husband: people.find(husband => husband.id === p.husband)
+    })
+})
+// console.log('1', pairs)
 
 //
 // const getPersonAge = (name) => {
@@ -95,6 +109,7 @@ function getHusbandName(wifeName) {
     })
     return husband ? husband.name : null;
 }
+
 // const wifeName = 'Alice';
 // console.log(`Husband of ${wifeName} is ${getHusbandName(wifeName)}`);
 
@@ -103,12 +118,16 @@ function getWifeName(husbandName) {
     const husband = people.find((item) => {
         return item.name === husbandName
     });
+    console.log('husbandName', husband)
     if (!husband) return null;
     const wife = people.find((item) => {
         return husband.id === item.husband
     });
+    console.log('wife', wife)
     return wife ? wife.name : null;
 }
+
+console.log('1' + getWifeName('George'))
 // const husbandName = 'Eugene';
 // console.log(`Wife of ${husbandName} is ${getWifeName(husbandName)}`);
 
@@ -125,19 +144,46 @@ console.log('avg age', getAverageAge())
 
 // { male: 4, female: 3 }
 function getGenderStats(arr) {
-    return arr.reduce(({ males, females }, person) => {
+    return arr.reduce(({males, females}, person) => {
         person.husband ? females++ : males++
-        return { males, females }
-    }, { males: 0, females: 0 });
+        return {males, females}
+    }, {males: 0, females: 0});
 }
+
 console.log(getGenderStats(people))
 
 // макс разница между мужем и женой
 function getMaxAgeDifference() {
-    const spouses = people.reduce(({spouses1, spouses2, spouses3}, person) => {
+    const wives = people.filter((item) => {
+        return item.husband
+    })
 
-    }, { spouses1: [], spouses2: [], spouses3: [] })
+    const pairs = wives.map((wife) => {
+        if (!wife.husband) return null;
+        const husband = people.find((person) => {
+            return person.id === wife.husband
+        });
+        return husband ? {wife, husband} : null
+    }).filter(pair => pair);
+
+    const countDifference = pairs.map((item) => {
+        return {
+            ...item,
+            difference: Math.abs(item.wife.age - item.husband.age)
+        }
+    });
+
+    countDifference.sort((a, b) => {
+        return  b.difference - a.difference
+    });
+
+
+    return countDifference[0].difference
 }
+
+
+
+console.log('Maximum difference between husband and wife:', getMaxAgeDifference(), 'years')
 
 
 function testVariables() {
