@@ -205,24 +205,123 @@ function filterList(arr) {
 
 console.log(`List number: ${filterList(array)}`)
 
-const str = 'abracadabra';
-for (let i=0; i<=str.length; i++) {
+const b = 'abracadabra';
+for (let i = 0; i <= str.length; i++) {
     str[i]
 }
 
-const arr = str.split('');
+// const arr = str.split('');
 
-console.log(arr)
-const arr2 = [1,2,3];
+// console.log(arr)
+const arr2 = [1, 2, 3];
 arr2.indexOf(2) // => 1 || -1
 
 function isVowel(symbol) {
-    return symbol
+    const arr = ['a', 'o', 'i', 'e', 'u']
+    return arr.indexOf(symbol.toLowerCase()) !== -1
 }
-console.log(isVowel())
+
+console.log('is "I" a vowel? ', isVowel('I'))
 
 function getCount(str) {
-    let vowelsCount = 0;
-    // enter your majic here
-    return vowelsCount;
+    return str
+        .split('')
+        .filter((symbol) => isVowel(symbol))
+        .length
 }
+
+console.log('vowel count for "abracadabra": ', getCount('abracadabra'));
+
+function solution(str, ending) {
+    for (let i = 0; i < ending.length; i++) {
+        if (ending[ending.length - 1 - i] !== str[str.length - 1 - i])
+            return false
+    }
+    return true
+}
+
+let string;
+let ending;
+string = 'abra'
+ending = 'dabra'
+console.log(`"${string}" -> "${ending}"`, solution(string, ending));
+
+
+// function DNAStrand1(dna) {
+//     const newDna = []
+//     const arrDna = dna.split('')
+//     arrDna.forEach((letter) => {
+//         switch (letter) {
+//             case 'A':
+//                 newDna.push('T');
+//                 break;
+//             case 'T':
+//                 newDna.push('A');
+//                 break;
+//             case 'G':
+//                 newDna.push('C');
+//                 break;
+//             case 'C':
+//                 newDna.push('G');
+//                 break;
+//             default:
+//                 newDna.push(letter);
+//         }
+//     })
+//     return newDna.join('');
+// }
+//
+// function DNAStrand(dna) {
+//     let strand = '';
+//     for (let i = 0; i < dna.length; i++) {
+//         if (dna[i] === 'A') {
+//             console.log(i, 'A -> T')
+//             strand += 'T'
+//         } else if (dna[i] === 'T') {
+//             console.log(i, 'T -> A')
+//             strand += 'A'
+//         } else if (dna[i] === 'C') {
+//             console.log(i, 'C -> G')
+//             strand += 'G'
+//         } else if (dna[i] === 'G') {
+//             console.log(i, 'G -> C')
+//             strand += 'C'
+//         } else {
+//             strand+= dna[i];
+//         }
+//     }
+//     return strand;
+// }
+
+function DNAStrand(dna) {
+    const map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'};
+    return dna.split('').map((symbol) => map[symbol] || symbol).join('');
+}
+
+console.log(DNAStrand('AATTGC'))
+
+
+function makeNegative(num) {
+    return num > 0 ? -num : num
+}
+
+console.log(makeNegative(5))
+
+
+function sumTwoSmallestNumbers(numbers) {
+    numbers.sort((a,b) => {
+        return a - b
+    })
+    return numbers[0] + numbers[1]
+}
+
+console.log(sumTwoSmallestNumbers([7,5,3,6,77,2,9,1]))
+
+class SmallestIntegerFinder {
+    constructor(numbers) {
+        return Math.min(...numbers)
+    }
+}
+
+let N = new SmallestIntegerFinder([1,2,3])
+console.log(N)
