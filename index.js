@@ -308,20 +308,70 @@ function makeNegative(num) {
 console.log(makeNegative(5))
 
 
+// function sumTwoSmallestNumbers(numbers) {
+//     numbers.sort((a,b) => {
+//         return a - b
+//     })
+//     return numbers[0] + numbers[1]
+// }
+// console.log(sumTwoSmallestNumbers([7,5,3,6,77,2,9,1]))
+
+// class SmallestIntegerFinder {
+//     findSmallestInt(args) {
+//
+//     }
+// }
+//
+// const finder = new SmallestIntegerFinder()
+// console.log(finder.findSmallestInt([0.5, 1,2,3,]))
+
 function sumTwoSmallestNumbers(numbers) {
-    numbers.sort((a,b) => {
-        return a - b
+    let minNumbers = [Infinity, Infinity]
+    numbers.forEach((number) => {
+        if (number < minNumbers[0]) {
+            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
+            minNumbers[0] = number;
+        } else {
+            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
+        }
     })
-    return numbers[0] + numbers[1]
+    return minNumbers[0] + minNumbers[1];
 }
+
 
 console.log(sumTwoSmallestNumbers([7,5,3,6,77,2,9,1]))
 
-class SmallestIntegerFinder {
-    constructor(numbers) {
-        return Math.min(...numbers)
+
+function createPhoneNumber(numbers){
+    let format = "(xxx) xxx-xxxx";
+    for(let i = 0; i < numbers.length; i++) {
+        format = format.replace('x', numbers[i]);
+    }
+
+    return format;
+}
+
+const arrPhoneNumbers = [1,2,3,4,5,6,7,8,9,0]
+console.log(createPhoneNumber(arrPhoneNumbers))
+
+function queueTime(customers, n) {
+    if (customers.length <= n) {
+        return Math.max(...customers);
+    }
+
+    if (customers.length === 0 || n === 0) {
+        return 0;
+    }
+
+    if (n === 1){
+        return customers.reduce((queue, time) => {
+            return queue + time;
+        }, 0)
+    }
+
+    if (n >= 2) {
+
     }
 }
 
-let N = new SmallestIntegerFinder([1,2,3])
-console.log(N)
+console.log(queueTime([2,4,10], 2))
