@@ -355,23 +355,18 @@ const arrPhoneNumbers = [1,2,3,4,5,6,7,8,9,0]
 console.log(createPhoneNumber(arrPhoneNumbers))
 
 function queueTime(customers, n) {
-    if (customers.length <= n) {
-        return Math.max(...customers);
+    const checkoutTills = []
+    // const maxQueueTime = Array.from({ length: n }, () => 0);
+    // const maxQueueTime = Array(n).fill(0)
+    for (let i=0; i<n; i++){
+        checkoutTills.push(0)
     }
+    customers.forEach(customer => {
+        const indexMinCheckoutTills = checkoutTills.indexOf(Math.min(...checkoutTills))
+        checkoutTills[indexMinCheckoutTills] += customer
+    })
 
-    if (customers.length === 0 || n === 0) {
-        return 0;
-    }
-
-    if (n === 1){
-        return customers.reduce((queue, time) => {
-            return queue + time;
-        }, 0)
-    }
-
-    if (n >= 2) {
-
-    }
+    return Math.max(...checkoutTills)
 }
 
 console.log(queueTime([2,4,10], 2))
