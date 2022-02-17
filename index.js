@@ -339,34 +339,137 @@ function sumTwoSmallestNumbers(numbers) {
 }
 
 
-console.log(sumTwoSmallestNumbers([7,5,3,6,77,2,9,1]))
+console.log(sumTwoSmallestNumbers([7, 5, 3, 6, 77, 2, 9, 1]))
 
 
-function createPhoneNumber(numbers){
+function createPhoneNumber(numbers) {
     let format = "(xxx) xxx-xxxx";
-    for(let i = 0; i < numbers.length; i++) {
+    for (let i = 0; i < numbers.length; i++) {
         format = format.replace('x', numbers[i]);
     }
 
     return format;
 }
 
-const arrPhoneNumbers = [1,2,3,4,5,6,7,8,9,0]
+const arrPhoneNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 console.log(createPhoneNumber(arrPhoneNumbers))
 
 function queueTime(customers, n) {
     const checkoutTills = []
     // const maxQueueTime = Array.from({ length: n }, () => 0);
     // const maxQueueTime = Array(n).fill(0)
-    for (let i=0; i<n; i++){
+    for (let i = 0; i < n; i++) {
         checkoutTills.push(0)
     }
     customers.forEach(customer => {
-        const indexMinCheckoutTills = checkoutTills.indexOf(Math.min(...checkoutTills))
-        checkoutTills[indexMinCheckoutTills] += customer
-    })
+        const {index: checkoutTillIndex} = checkoutTills.reduce((min, checkoutTill, index) => {
+            if (min.value > checkoutTill) {
+                min.value = checkoutTill;
+                min.index = index;
+            }
+            return min;
+        }, {value: -Infinity, index: -1})
+
+        checkoutTills[checkoutTillIndex] += customer.value;
+    });
 
     return Math.max(...checkoutTills)
 }
 
-console.log(queueTime([2,4,10], 2))
+console.log(queueTime([2, 4, 10], 2))
+
+function towerBuilder(n) {
+    const tower = []
+    for (let i = 0; i < n; i++) {
+        const spaces = Array.from({length: 1 - 1 + i}, () => ' ').join('')
+        const asterix = Array.from({length: n - i + 2}, () => '*').join('');
+        tower.push(`${spaces}${asterix}${spaces}`)
+    }
+
+    for (let j = 0; j < n; j++ ) {
+        const spaces = Array.from({length: n - j - 1}, () => ' ').join('')
+        const asterix = Array.from({length: 1 + 2 * j}, () => '*').join('');
+        tower.push(`${spaces}${asterix}${spaces}`)
+    }
+    return tower
+}
+
+console.log(JSON.stringify(towerBuilder(5), null, '\n'));
+
+function findUniq(arr) {
+    arr = arr.sort()
+    if (arr[0] === arr[1]) {
+        return arr[arr.length - 1]
+    }
+    return arr[0];
+}
+
+console.log(findUniq([20,10,10,10,10]))
+
+function moveZeros (arr) {
+    arr.forEach(zeros => {
+        zeros.find(item => item === 0)
+
+    })
+    // for (let i = 0; i < arr.length; i++) {
+    //     if (arr[0] === 0) {
+    //         arr.push(arr[0])
+    //         arr.shift(arr[0])
+    //     }
+    // }
+
+    return arr
+}
+
+console.log(moveZeros([false, 1, 0, 0, 'string', 0, 10, 0, 15, 3, -1, -1]))
+
+
+//************* Асинхронность **************************************
+function request(err, data) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (err)
+                reject(err)
+            else
+                resolve(data);
+        }, 2000)
+    })
+}
+
+
+// const r1 = request(null, 1);
+// r1.then((data) => {
+//     console.log('request1 data', data);
+//     return request(null, 2);
+// }).then((data2) => {
+//     console.log('request1 data2', data2);
+//     if (data2 === 2) {
+//         return request(null, 3)
+//     }
+//     return data2;
+// }).then((data3) => {
+//
+// })
+
+function time(start) {
+    return Math.round((Date.now() - start) / 1000)
+}
+
+(async function() {
+    const start = Date.now();
+    const p1 = request(null, 23)
+    // console.log('line 419', time(start)); // 0
+    const p2 = request(null, 45)
+    // console.log('line 421', time(start)); // 0
+    const r1 = await p1;
+    // console.log(r1, time(start));         // 2
+    const r2 = await p2;
+    // console.log(r2, time(start));         // 2
+})() //1
+
+
+
+
+
+
+
