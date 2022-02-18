@@ -207,7 +207,7 @@ console.log(`List number: ${filterList(array)}`)
 
 const b = 'abracadabra';
 for (let i = 0; i <= str.length; i++) {
-    str[i]
+    // str[i]
 }
 
 // const arr = str.split('');
@@ -217,85 +217,33 @@ const arr2 = [1, 2, 3];
 arr2.indexOf(2) // => 1 || -1
 
 function isVowel(symbol) {
-    const arr = ['a', 'o', 'i', 'e', 'u']
-    return arr.indexOf(symbol.toLowerCase()) !== -1
 }
 
 console.log('is "I" a vowel? ', isVowel('I'))
 
-function getCount(str) {
-    return str
-        .split('')
-        .filter((symbol) => isVowel(symbol))
-        .length
+function getVowelCount(str) {
+
 }
 
-console.log('vowel count for "abracadabra": ', getCount('abracadabra'));
+// console.log('vowel count for "abracadabra": ', getCount('abracadabra'));
 
 function solution(str, ending) {
-    for (let i = 0; i < ending.length; i++) {
-        if (ending[ending.length - 1 - i] !== str[str.length - 1 - i])
-            return false
-    }
-    return true
 }
 
 let string;
 let ending;
 string = 'abra'
 ending = 'dabra'
-console.log(`"${string}" -> "${ending}"`, solution(string, ending));
+// console.log(`"${string}" -> "${ending}"`, solution(string, ending));
 
 
 // function DNAStrand1(dna) {
-//     const newDna = []
-//     const arrDna = dna.split('')
-//     arrDna.forEach((letter) => {
-//         switch (letter) {
-//             case 'A':
-//                 newDna.push('T');
-//                 break;
-//             case 'T':
-//                 newDna.push('A');
-//                 break;
-//             case 'G':
-//                 newDna.push('C');
-//                 break;
-//             case 'C':
-//                 newDna.push('G');
-//                 break;
-//             default:
-//                 newDna.push(letter);
-//         }
-//     })
-//     return newDna.join('');
 // }
 //
 // function DNAStrand(dna) {
-//     let strand = '';
-//     for (let i = 0; i < dna.length; i++) {
-//         if (dna[i] === 'A') {
-//             console.log(i, 'A -> T')
-//             strand += 'T'
-//         } else if (dna[i] === 'T') {
-//             console.log(i, 'T -> A')
-//             strand += 'A'
-//         } else if (dna[i] === 'C') {
-//             console.log(i, 'C -> G')
-//             strand += 'G'
-//         } else if (dna[i] === 'G') {
-//             console.log(i, 'G -> C')
-//             strand += 'C'
-//         } else {
-//             strand+= dna[i];
-//         }
-//     }
-//     return strand;
 // }
 
 function DNAStrand(dna) {
-    const map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'};
-    return dna.split('').map((symbol) => map[symbol] || symbol).join('');
 }
 
 console.log(DNAStrand('AATTGC'))
@@ -307,35 +255,7 @@ function makeNegative(num) {
 
 console.log(makeNegative(5))
 
-
-// function sumTwoSmallestNumbers(numbers) {
-//     numbers.sort((a,b) => {
-//         return a - b
-//     })
-//     return numbers[0] + numbers[1]
-// }
-// console.log(sumTwoSmallestNumbers([7,5,3,6,77,2,9,1]))
-
-// class SmallestIntegerFinder {
-//     findSmallestInt(args) {
-//
-//     }
-// }
-//
-// const finder = new SmallestIntegerFinder()
-// console.log(finder.findSmallestInt([0.5, 1,2,3,]))
-
 function sumTwoSmallestNumbers(numbers) {
-    let minNumbers = [Infinity, Infinity]
-    numbers.forEach((number) => {
-        if (number < minNumbers[0]) {
-            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
-            minNumbers[0] = number;
-        } else {
-            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
-        }
-    })
-    return minNumbers[0] + minNumbers[1];
 }
 
 
@@ -355,73 +275,58 @@ const arrPhoneNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 console.log(createPhoneNumber(arrPhoneNumbers))
 
 function queueTime(customers, n) {
-    const checkoutTills = []
-    // const maxQueueTime = Array.from({ length: n }, () => 0);
-    // const maxQueueTime = Array(n).fill(0)
-    for (let i = 0; i < n; i++) {
-        checkoutTills.push(0)
-    }
-    customers.forEach(customer => {
-        const {index: checkoutTillIndex} = checkoutTills.reduce((min, checkoutTill, index) => {
-            if (min.value > checkoutTill) {
-                min.value = checkoutTill;
-                min.index = index;
-            }
-            return min;
-        }, {value: -Infinity, index: -1})
-
-        checkoutTills[checkoutTillIndex] += customer.value;
-    });
-
-    return Math.max(...checkoutTills)
 }
 
 console.log(queueTime([2, 4, 10], 2))
 
 function towerBuilder(n) {
     const tower = []
-    for (let i = 0; i < n; i++) {
-        const spaces = Array.from({length: 1 - 1 + i}, () => ' ').join('')
-        const asterix = Array.from({length: n - i + 2}, () => '*').join('');
-        tower.push(`${spaces}${asterix}${spaces}`)
+    for (let i = n - 1; i > n.length; i--) {
+        const space = Array.from({length: i }, () => ' ' ).join('');
+        const asterix = Array.from({length: 1 + 2 * i }, () => '*').join('');
+        tower.push(`${space}${asterix}${space}`)
     }
 
-    for (let j = 0; j < n; j++ ) {
-        const spaces = Array.from({length: n - j - 1}, () => ' ').join('')
+    for (let j = 0; j < n.length; j++) {
+        const space = Array.from({length: n - j - 1}, () => ' ' ).join('');
         const asterix = Array.from({length: 1 + 2 * j}, () => '*').join('');
-        tower.push(`${spaces}${asterix}${spaces}`)
+        tower.push(`${space}${asterix}${space}`)
     }
     return tower
 }
 
-console.log(JSON.stringify(towerBuilder(5), null, '\n'));
+console.log('1',JSON.stringify(towerBuilder(5), null, '\n'));
 
 function findUniq(arr) {
-    arr = arr.sort()
-    if (arr[0] === arr[1]) {
-        return arr[arr.length - 1]
-    }
-    return arr[0];
+
 }
 
-console.log(findUniq([20,10,10,10,10]))
+console.log(findUniq([20,10,30,30,10]))
 
-function moveZeros (arr) {
-    arr.forEach(zeros => {
-        zeros.find(item => item === 0)
 
-    })
-    // for (let i = 0; i < arr.length; i++) {
-    //     if (arr[0] === 0) {
-    //         arr.push(arr[0])
-    //         arr.shift(arr[0])
-    //     }
-    // }
 
-    return arr
+function inArray(array1,array2){
+
 }
 
-console.log(moveZeros([false, 1, 0, 0, 'string', 0, 10, 0, 15, 3, -1, -1]))
+const a1 = ["arp", "strong", "live", 'xyz']
+const a2 = ["lively", "alive", "harp", "sharp", "armstrong"]
+console.log(inArray(a1, a2))
+
+
+function partsSums(ls) {
+    ls.map((item) => {})
+
+}
+console.log(partsSums([1,2,3,4,5,6]))
+
+function digital_root(n) {
+    const arr = n.toString().split('')
+    return arr.reduce((pref,item) =>  pref + +item ,0)
+}
+
+console.log(digital_root(1232324234))
+
 
 
 //************* Асинхронность **************************************
