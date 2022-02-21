@@ -217,24 +217,37 @@ const arr2 = [1, 2, 3];
 arr2.indexOf(2) // => 1 || -1
 
 function isVowel(symbol) {
+    const arr = ['a', 'o', 'i', 'e', 'u']
+    return arr.indexOf(symbol.toLowerCase()) !== -1
 }
 
 console.log('is "I" a vowel? ', isVowel('I'))
 
 function getVowelCount(str) {
+    let vowels = str.split('').filter((symbol) => isVowel(symbol))
+    return vowels.length
+}
+
+function getUniqueVowelsCount() {
 
 }
 
-// console.log('vowel count for "abracadabra": ', getCount('abracadabra'));
+console.log('vowel count for "abracadabra": ', getVowelCount('abracadabra'));
 
 function solution(str, ending) {
+    for (let i = 0; i < ending.length; i++) {
+        if (ending[ending.length-1-i] !== str[str.length-1-i]) {
+            return false
+        }
+    }
+    return true
 }
 
 let string;
 let ending;
-string = 'abra'
+string = 'abracadebra'
 ending = 'dabra'
-// console.log(`"${string}" -> "${ending}"`, solution(string, ending));
+console.log(`"${string}" -> "${ending}"`, solution(string, ending));
 
 
 // function DNAStrand1(dna) {
@@ -244,6 +257,11 @@ ending = 'dabra'
 // }
 
 function DNAStrand(dna) {
+    const map = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+
+    return dna.split('').map((item) => {
+        return map[item] || item
+    }).join('')
 }
 
 console.log(DNAStrand('AATTGC'))
@@ -256,10 +274,23 @@ function makeNegative(num) {
 console.log(makeNegative(5))
 
 function sumTwoSmallestNumbers(numbers) {
+    let minNumbers = [Infinity, Infinity]
+    numbers.forEach((item) =>{
+        console.log('item --> ', item)
+        console.log('minNumbers', minNumbers)
+        if (item < minNumbers[0]) {
+            console.log('replacing min numbers')
+            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
+            minNumbers[0] = item
+        } else {
+
+        }
+    })
+    return minNumbers
 }
 
 
-console.log(sumTwoSmallestNumbers([7, 5, 3, 6, 77, 2, 9, 1]))
+console.log(sumTwoSmallestNumbers([7, 5, 1, 6, 2, 9, 8]))
 
 
 function createPhoneNumber(numbers) {
@@ -275,19 +306,37 @@ const arrPhoneNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 console.log(createPhoneNumber(arrPhoneNumbers))
 
 function queueTime(customers, n) {
+    const checkoutTills = []
+    for (let i=0; i<n; i++){
+        checkoutTills.push(0)
+    }
+
+    customers.forEach(customer => {
+        const indexMinCheckoutTills = checkoutTills.indexOf(Math.min(...checkoutTills))
+        checkoutTills[indexMinCheckoutTills] += customer
+    })
+
+    return Math.max(...checkoutTills)
 }
 
-console.log(queueTime([2, 4, 10], 2))
+console.log(queueTime([
+    { name: 'Alice', time: 2 },
+    { name: 'Bob', time: 4 },
+    { name: 'Richard', time: 10 }
+], [
+    { time: 0, merchant: 'Jane Smith' },
+    { time: 0, merchant: 'Oliver Cromwell' }
+]))
 
 function towerBuilder(n) {
     const tower = []
-    for (let i = n - 1; i > n.length; i--) {
-        const space = Array.from({length: i }, () => ' ' ).join('');
+    for (let i = n - 1; i>0 ; i--) {
+        const space = Array.from({length: n - i - 1 }, () => ' ' ).join('');
         const asterix = Array.from({length: 1 + 2 * i }, () => '*').join('');
         tower.push(`${space}${asterix}${space}`)
     }
 
-    for (let j = 0; j < n.length; j++) {
+    for (let j = 0; j < n; j++) {
         const space = Array.from({length: n - j - 1}, () => ' ' ).join('');
         const asterix = Array.from({length: 1 + 2 * j}, () => '*').join('');
         tower.push(`${space}${asterix}${space}`)
@@ -295,18 +344,11 @@ function towerBuilder(n) {
     return tower
 }
 
-console.log('1',JSON.stringify(towerBuilder(5), null, '\n'));
-
-function findUniq(arr) {
-
-}
-
-console.log(findUniq([20,10,30,30,10]))
-
+console.log(JSON.stringify(towerBuilder(5), null, '\n'));
 
 
 function inArray(array1,array2){
-
+    return array1.filter( str => array2.join(' ').includes(str) ).sort();
 }
 
 const a1 = ["arp", "strong", "live", 'xyz']
@@ -315,17 +357,33 @@ console.log(inArray(a1, a2))
 
 
 function partsSums(ls) {
-    ls.map((item) => {})
+    let sum = ls.reduce((sum, item) => sum + item, 0);
+    return ls.map((item) => {
+        const current = sum;
+        sum -= item;
+        return current
+    }).concat(0);
 
 }
 console.log(partsSums([1,2,3,4,5,6]))
 
 function digital_root(n) {
-    const arr = n.toString().split('')
-    return arr.reduce((pref,item) =>  pref + +item ,0)
+    let number = n;
+    while (number > 9) {
+        number = number.toString().split('').reduce((prev, item) => {
+            return prev + +item
+        }, 0)
+    }
+    return number
 }
 
-console.log(digital_root(1232324234))
+console.log(digital_root(751))
+
+// Return the output array, and ignore all non-op characters
+function parse( data ) {
+
+}
+
 
 
 
