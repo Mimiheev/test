@@ -236,7 +236,7 @@ console.log('vowel count for "abracadabra": ', getVowelCount('abracadabra'));
 
 function solution(str, ending) {
     for (let i = 0; i < ending.length; i++) {
-        if (ending[ending.length-1-i] !== str[str.length-1-i]) {
+        if (ending[ending.length - 1 - i] !== str[str.length - 1 - i]) {
             return false
         }
     }
@@ -257,7 +257,7 @@ console.log(`"${string}" -> "${ending}"`, solution(string, ending));
 // }
 
 function DNAStrand(dna) {
-    const map = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+    const map = {'A': 'T', 'T': 'A', 'C': 'G', 'G': 'C'}
 
     return dna.split('').map((item) => {
         return map[item] || item
@@ -275,22 +275,19 @@ console.log(makeNegative(5))
 
 function sumTwoSmallestNumbers(numbers) {
     let minNumbers = [Infinity, Infinity]
-    numbers.forEach((item) =>{
-        console.log('item --> ', item)
-        console.log('minNumbers', minNumbers)
+    numbers.forEach((item) => {
         if (item < minNumbers[0]) {
-            console.log('replacing min numbers')
             minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
             minNumbers[0] = item
         } else {
-
+            minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
         }
     })
     return minNumbers
 }
 
 
-console.log(sumTwoSmallestNumbers([7, 5, 1, 6, 2, 9, 8]))
+console.log(sumTwoSmallestNumbers([7, 5, 4, 6, 3, 9, 8]))
 
 
 function createPhoneNumber(numbers) {
@@ -305,39 +302,44 @@ function createPhoneNumber(numbers) {
 const arrPhoneNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 console.log(createPhoneNumber(arrPhoneNumbers))
 
-function queueTime(customers, n) {
-    const checkoutTills = []
-    for (let i=0; i<n; i++){
-        checkoutTills.push(0)
-    }
+function queueTime(customers, checkoutTills) {
 
     customers.forEach(customer => {
-        const indexMinCheckoutTills = checkoutTills.indexOf(Math.min(...checkoutTills))
-        checkoutTills[indexMinCheckoutTills] += customer
-    })
+        const {index: checkoutTillIndex} = checkoutTills.reduce((min, checkoutTill, index) => {
+            if (min.value > checkoutTill) {
+                min.value = checkoutTill
+                min.index = index
+            }
+            return min
+        }, {value: Infinity, index: -1})
+        console.log(checkoutTills)
+
+        checkoutTills[checkoutTillIndex] += customer.time;
+    });
+    console.log(checkoutTills)
 
     return Math.max(...checkoutTills)
 }
 
 console.log(queueTime([
-    { name: 'Alice', time: 2 },
-    { name: 'Bob', time: 4 },
-    { name: 'Richard', time: 10 }
+    {name: 'Alice', time: 2},
+    {name: 'Bob', time: 4},
+    {name: 'Richard', time: 10}
 ], [
-    { time: 0, merchant: 'Jane Smith' },
-    { time: 0, merchant: 'Oliver Cromwell' }
+    {time: 0, merchant: 'Jane Smith'},
+    {time: 0, merchant: 'Oliver Cromwell'}
 ]))
 
 function towerBuilder(n) {
     const tower = []
-    for (let i = n - 1; i>0 ; i--) {
-        const space = Array.from({length: n - i - 1 }, () => ' ' ).join('');
-        const asterix = Array.from({length: 1 + 2 * i }, () => '*').join('');
+    for (let i = n - 1; i > 0; i--) {
+        const space = Array.from({length: n - i - 1}, () => ' ').join('');
+        const asterix = Array.from({length: 1 + 2 * i}, () => '*').join('');
         tower.push(`${space}${asterix}${space}`)
     }
 
     for (let j = 0; j < n; j++) {
-        const space = Array.from({length: n - j - 1}, () => ' ' ).join('');
+        const space = Array.from({length: n - j - 1}, () => ' ').join('');
         const asterix = Array.from({length: 1 + 2 * j}, () => '*').join('');
         tower.push(`${space}${asterix}${space}`)
     }
@@ -347,8 +349,8 @@ function towerBuilder(n) {
 console.log(JSON.stringify(towerBuilder(5), null, '\n'));
 
 
-function inArray(array1,array2){
-    return array1.filter( str => array2.join(' ').includes(str) ).sort();
+function inArray(array1, array2) {
+    return array1.filter(str => array2.join(' ').includes(str)).sort();
 }
 
 const a1 = ["arp", "strong", "live", 'xyz']
@@ -365,7 +367,8 @@ function partsSums(ls) {
     }).concat(0);
 
 }
-console.log(partsSums([1,2,3,4,5,6]))
+
+console.log(partsSums([1, 2, 3, 4, 5, 6]))
 
 function digital_root(n) {
     let number = n;
@@ -380,11 +383,9 @@ function digital_root(n) {
 console.log(digital_root(751))
 
 // Return the output array, and ignore all non-op characters
-function parse( data ) {
+function parse(data) {
 
 }
-
-
 
 
 //************* Асинхронность **************************************
@@ -418,7 +419,7 @@ function time(start) {
     return Math.round((Date.now() - start) / 1000)
 }
 
-(async function() {
+(async function () {
     const start = Date.now();
     const p1 = request(null, 23)
     // console.log('line 419', time(start)); // 0
