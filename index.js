@@ -1,6 +1,6 @@
 const number = 3; // NaN
 const str = '3';
-const obj = {foo: 'bar'}
+const obj = {foo: number}
 const bool = true;
 const undef = undefined;
 const arr = [1, 2, 3]; // object // Array.isArray
@@ -228,11 +228,18 @@ function getVowelCount(str) {
     return vowels.length
 }
 
-function getUniqueVowelsCount() {
-
+function getUniqueVowelsCount(str) {
+    let vowels = str.split('').filter((symbol) => isVowel(symbol))
+    let uniqueVowels = []
+    vowels.forEach((item) => {
+        if (!uniqueVowels.includes(item)) {
+            uniqueVowels.push(item)
+        }
+    })
+    return uniqueVowels.length
 }
 
-console.log('vowel count for "abracadabra": ', getVowelCount('abracadabra'));
+console.log('vowel count for "abracadabra": ', getUniqueVowelsCount('abraicadebra'));
 
 function solution(str, ending) {
     for (let i = 0; i < ending.length; i++) {
@@ -245,7 +252,7 @@ function solution(str, ending) {
 
 let string;
 let ending;
-string = 'abracadebra'
+string = 'abra'
 ending = 'dabra'
 console.log(`"${string}" -> "${ending}"`, solution(string, ending));
 
@@ -283,11 +290,11 @@ function sumTwoSmallestNumbers(numbers) {
             minNumbers[1] = Math.min(minNumbers[0], minNumbers[1])
         }
     })
-    return minNumbers
+    return minNumbers[0] + minNumbers[1]
 }
 
 
-console.log(sumTwoSmallestNumbers([7, 5, 4, 6, 3, 9, 8]))
+console.log(sumTwoSmallestNumbers([7, 5, 4, 6, 3, 1, 9, 8]))
 
 
 function createPhoneNumber(numbers) {
@@ -304,21 +311,25 @@ console.log(createPhoneNumber(arrPhoneNumbers))
 
 function queueTime(customers, checkoutTills) {
 
-    customers.forEach(customer => {
+
+    customers.forEach((customer) => {
         const {index: checkoutTillIndex} = checkoutTills.reduce((min, checkoutTill, index) => {
-            if (min.value > checkoutTill) {
-                min.value = checkoutTill
+            if (min.value > checkoutTill.time) {
+                min.value = checkoutTill.time
                 min.index = index
             }
             return min
         }, {value: Infinity, index: -1})
-        console.log(checkoutTills)
 
-        checkoutTills[checkoutTillIndex] += customer.time;
-    });
-    console.log(checkoutTills)
-
-    return Math.max(...checkoutTills)
+        checkoutTills[checkoutTillIndex].time  += customer.time
+    })
+    let maxTime = 0
+    checkoutTills.forEach((item) => {
+        if (maxTime < item.time) {
+            maxTime = item.time
+        }
+    })
+    return checkoutTills.filter(item => item.time === maxTime )
 }
 
 console.log(queueTime([
